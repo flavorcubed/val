@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>???</title>
+
+    <!-- Start of CSS -->
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        background-color: rgb(255, 207, 213);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top:-200px;
+        margin-left:-300px;
+        background-color: white;
+        border-radius: 50px;
+        padding: 20px;
+        width: 600px;
+        height: 400px;
+      }
+
+      h1 {
+        color: #424242;
+        font-size: 22px;
+        font-weight: bold;
+        font-style: italic;
+        text-align: center;
+      }
+
+      .image-area {
+        position: relative;
+        top: 10%;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .buttons {
+        position: relative;
+        top: 25%;
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+      }
+
+      button {
+        color: white;
+        font-weight: bold;
+        font-style: italic;
+        font-size: 14px;
+        background-color: rgb(255, 71, 102);
+        border-radius: 50px;
+        border: none;
+        padding: 5px 10px;
+        width: 75px;
+      }
+    </style>
+    <!-- End of CSS -->
+
+  </head>
+
+  <body>
+    <div class="box">
+      <h1>Will you be my Valentine?</h1>
+
+      <div class="image-area">
+      <img id="myImage" src="https://i.imgur.com/nfaJxJp.png">
+      </div>
+      
+      <div class="buttons">
+        <button id="yesBtn" onclick="changeImage(), heartShapedConfetti()">Yes</button>
+        <button id="noBtn">No</button>
+      </div>
+    </div>
+    
+    <!-- Start of JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script type="text/javascript">
+      function changeImage() {
+        const image = document.getElementById('myImage');
+        if (image.src.endsWith('nfaJxJp.png')) {
+          image.src = 'https://i.imgur.com/NNJy1J7.png';
+        }
+      }
+
+      function heartShapedConfetti() {
+        confetti({
+          particleCount: 200,
+          spread: 70,
+          startVelocity: 60,
+          shapes: ["heart"],
+          colors: ["pink", "hotpink", "red", "black"],
+          origin: {y: 0.6}
+        });
+      }
+    </script>
+    <!-- End of JavaScript -->
+
+  </body>
+</html>
