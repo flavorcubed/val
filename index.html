@@ -15,16 +15,24 @@
       }
 
       .box {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top:-200px;
-        margin-left:-300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         background-color: white;
         border-radius: 50px;
-        padding: 20px;
+        padding: 30px;
         width: 600px;
         height: 400px;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      .subtitle {
+        color: rgb(255, 71, 102);
+        font-size: 26px;
+        font-weight: bold;
+        font-style: italic;
+        margin: 0;
       }
 
       h1 {
@@ -33,21 +41,10 @@
         font-weight: bold;
         font-style: italic;
         text-align: center;
-      }
-
-      canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9999;
+        margin: 5px 0 20px 0;
       }
 
       .image-area {
-        position: relative;
-        top: 10%;
         width: 100%;
         flex: 1;
         display: flex;
@@ -56,12 +53,20 @@
         margin-bottom: 20px;
       }
 
+      #myImage {
+        max-height: 200px;
+        width: auto;
+      }
+
       .buttons {
-        position: relative;
-        top: 25%;
         display: flex;
         gap: 50px;
         justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        margin-bottom: 20px;
+        position: relative;
       }
 
       button {
@@ -74,6 +79,34 @@
         border: none;
         padding: 5px 10px;
         width: 75px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      #yesBtn {
+        position: relative;
+        left: -12px;
+      }
+
+      #noBtn {
+        transition: 0.1s ease;
+        z-index: 15;
+      }
+
+      .btn-wrapper {
+        width: 50%;
+        display: flex;
+        align-items: center;
+      }
+
+      .left {
+        justify-content: flex-end;
+        padding-right: 15px;
+      }
+
+      .right {
+        justify-content: flex-start;
+        padding-left: 15px;
       }
     </style>
     <!-- End of CSS -->
@@ -82,6 +115,7 @@
 
   <body>
     <div class="box">
+      <p class="subtitle">Dan,</p>
       <h1>Will you be my Valentine?</h1>
 
       <div class="image-area">
@@ -89,31 +123,56 @@
       </div>
       
       <div class="buttons">
-        <button id="yesBtn" onclick="changeImage(), heartShapedConfetti()">Yes</button>
+        <div class="btn-wrapper left">
+        <button id="yesBtn" onclick="changeImage()">Yes</button>
+        </div>
+
+        <div class="btn-wrapper right">
         <button id="noBtn">No</button>
+        </div>
       </div>
     </div>
     
     <!-- Start of JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script type="text/javascript">
+     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+     <script type="text/javascript">
+     const noBtn = document.getElementById('noBtn');
+     const box = document.querySelector('.box');
+
       function changeImage() {
         const image = document.getElementById('myImage');
-        if (image.src.endsWith('nfaJxJp.png')) {
-          image.src = 'https://i.imgur.com/NNJy1J7.png';
-        }
-      };
 
-      function heartShapedConfetti() {
+        // Change image
+        image.src = 'https://i.imgur.com/NNJy1J7.png';
+
+        // Define hearts
+        const heart1 = confetti.shapeFromText({ text: '❤️', color: '#FF4766' });
+        const heart2 = confetti.shapeFromText({ text: '❤️', color: '#FF6581' });
+        const heart3 = confetti.shapeFromText({ text: '❤️', color: '#FF8999' });
+        const heart4 = confetti.shapeFromText({ text: '❤️', color: '#FF1560' });
+        
+        // FIRE THE CONFETTI
         confetti({
-          particleCount: 200,
+          particleCount: 80,
           spread: 70,
-          startVelocity: 60,
-          shapes: ["heart"],
-          colors: ["pink", "hotpink", "red", "black"],
-          origin: {y: 0.5, y: 0.5}
+          origin: { y: 0.51, x: .52 },
+          shapes: [heart1, heart2, heart3, heart4],
+          scalar: 1.75,
+          zIndex: 9999
         });
-      };
+      }
+
+      noBtn.addEventListener('mouseover', () => {
+        const boxRect = box.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+        
+        const x = Math.random() * (box.clientWidth - noBtn.clientWidth);
+        const y = Math.random() * (box.clientHeight - noBtn.clientHeight);
+
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      });
     </script>
     <!-- End of JavaScript -->
 
